@@ -51,9 +51,9 @@ def get_commits_within_window(api, headers, owner, repo, days):
 def print_results(results):
     for owner in results:
         for repo in results[owner]:
-            print(bordered("Commits submitted for {}/{}\n".format(owner, repo)))
+            print((bordered("Commits submitted for {}/{}\n".format(owner, repo))))
             for commit in results[owner][repo]:
-                print commit['html_url']
+                print(commit['html_url'])
 
 
 def parse_arguments():
@@ -94,12 +94,12 @@ def main():
             owners_and_repos = yaml.load(yaml_file)
 
         for owner_and_repos in owners_and_repos:
-            owner = owner_and_repos.keys()[0]
-            for repos in owner_and_repos.values():
+            owner = list(owner_and_repos.keys())[0]
+            for repos in list(owner_and_repos.values()):
                 results[owner] = {}
                 for repo in repos:
                     try:
-                        if repo in results[owner].keys():
+                        if repo in list(results[owner].keys()):
                             results[owner][repo].add(get_commits_within_window(args.api, headers, owner,
                                                                                repo, args.days))
                         else:
@@ -112,7 +112,7 @@ def main():
         except ValueError as e:
             log.error("{}, Owner: {}, Repo: {}".format(e, args.owner, args.repo))
     else:
-        print "pass me something"
+        print("pass me something")
 
     # pprint.pprint(results)
     print_results(results)
