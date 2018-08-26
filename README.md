@@ -30,9 +30,11 @@ optional arguments:
 
 ## Examples
 
+```bash
 $ python -m gissip.main  -d 7 -y my_loved_repos.yml
 $ python -m gissip.main  -d 7 -y my_loved_repos.yml -t xxx -a "my own GitHub API"
 $ python -m gissip.main -o chadell -r gissip
+```
 
 ### YAML file
 
