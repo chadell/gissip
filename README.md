@@ -1,5 +1,7 @@
 # GISSIP: Git Gossip 
 
+[![Build Status](https://travis-ci.org/chadell/gissip.svg?branch=master)](https://travis-ci.org/chadell/gissip)
+
 Have you ever wondered if any change has happened to one of your loved GitHub repos?
 
 This simple tool give you a simple way to track them and get links to the merge commits that have happened on the last X days.
