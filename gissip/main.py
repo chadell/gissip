@@ -6,7 +6,6 @@ import sys
 import argparse
 import requests
 from datetime import datetime, timedelta
-import pprint
 import yaml
 
 log = logging.getLogger('critical_peering')
@@ -33,17 +32,19 @@ def get_commits_within_window(api, headers, owner, repo, days):
     if req_response.status_code == 404:
         raise ValueError("Owner or Repo not found")
     elif req_response.status_code == 403:
-        raise ValueError("Rate Limit error: {}. Current value of access per hour: {}".format(req_response.json()['message'], req_response.headers['X-RateLimit-Limit']))
+        raise ValueError("Rate Limit error: {}. Current value "
+                         "of access per hour: {}".format(req_response.json()['message'],
+                                                         req_response.headers['X-RateLimit-Limit']))
     elif req_response.status_code == 401:
-        raise ValueError("Failed Authorization")        
+        raise ValueError("Failed Authorization")
 
     result_commits = []
     all_commits = req_response.json()
     for commit in all_commits:
-        commit_date =  datetime.strptime(commit['commit']['author']['date'] ,'%Y-%m-%dT%H:%M:%SZ')
+        commit_date = datetime.strptime(commit['commit']['author']['date'], '%Y-%m-%dT%H:%M:%SZ')
         if commit_date > datetime.now() - timedelta(days=days):
             result_commits.append(commit)
-    
+
     return result_commits
 
 
@@ -84,7 +85,7 @@ def main():
         if req_response.status_code == 401:
             log.info("Authorization error: {}".format(req_response.json()['message']))
         else:
-            log.info ("INFO: Successfully authenticated")
+            log.info("INFO: Successfully authenticated")
     else:
         headers = None
 
@@ -99,7 +100,8 @@ def main():
                 for repo in repos:
                     try:
                         if repo in results[owner].keys():
-                            results[owner][repo].add(get_commits_within_window(args.api, headers, owner, repo, args.days))
+                            results[owner][repo].add(get_commits_within_window(args.api, headers, owner,
+                                                                               repo, args.days))
                         else:
                             results[owner][repo] = get_commits_within_window(args.api, headers, owner, repo, args.days)
                     except ValueError as e:
