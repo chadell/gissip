@@ -36,9 +36,12 @@ class PyTest(TestCommand):
 
 setup(
     name="gissip",
-    version="0.0.1",
+    version="0.0.2",
+    python_requires='>=3.5',
     author="Christian Adell",
     author_email="chadell@gmail.com",
+    mantainer="Christian Adell",
+    mantainer_email="chadell@gmail.com",
     description="Script to observer commits of your loved repos",
     packages=find_packages(),
     entry_points={'console_scripts': [
@@ -48,4 +51,26 @@ setup(
     tests_require=parse_requirements(os.path.join('requirements', 'test_requirements.txt')),
     cmdclass={'test': PyTest},
     test_suite='tests',
+    keywords=['Git', 'GitHub', 'gossip'],
+    classifiers=[
+        "Development Status :: 4 - Beta",
+
+        "Environment :: Console",
+
+        "Intended Audience :: Information Technology",
+        "Intended Audience :: System Administrators",
+        "Intended Audience :: Telecommunications Industry",
+
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+
+        "Operating System :: POSIX",
+        "Operating System :: Unix",
+
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+
+        "Topic :: Internet :: WWW/HTTP",
+    ],
 )
