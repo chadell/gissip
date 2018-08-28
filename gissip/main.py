@@ -1,4 +1,4 @@
-# !/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import logging
@@ -92,7 +92,6 @@ def main():
     if args.yaml:
         with open(args.yaml, 'r') as yaml_file:
             owners_and_repos = yaml.load(yaml_file)
-
         for owner_and_repos in owners_and_repos:
             owner = list(owner_and_repos.keys())[0]
             for repos in list(owner_and_repos.values()):
@@ -107,8 +106,10 @@ def main():
                     except ValueError as e:
                         log.error("{}, Owner: {}, Repo: {}".format(e, owner, repo))
     elif args.repo and args.owner:
+        results[args.owner] = {}
         try:
-            results[args.owner] = get_commits_within_window(args.api, headers, args.owner, args.repo, args.days)
+            results[args.owner][args.repo] = get_commits_within_window(args.api, headers, args.owner,
+                                                                       args.repo, args.days)
         except ValueError as e:
             log.error("{}, Owner: {}, Repo: {}".format(e, args.owner, args.repo))
     else:

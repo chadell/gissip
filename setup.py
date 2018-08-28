@@ -36,7 +36,7 @@ class PyTest(TestCommand):
 
 setup(
     name="gissip",
-    version="0.0.3",
+    version="0.0.4",
     python_requires='>=3.5',
     author="Christian Adell",
     author_email="chadell@gmail.com",
@@ -69,7 +69,7 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
 
         "Topic :: Internet :: WWW/HTTP",
     ],
