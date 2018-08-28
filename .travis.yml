@@ -2,7 +2,7 @@ language: python
 python:
 - '2.7'
 - '3.5'
-- '3.7'
+- '3.6'
 install:
 - pip install -r requirements/test_requirements.txt
 - pip install -r requirements/requirements.txt
@@ -15,4 +15,4 @@ deploy:
     secure: eEhRwiuW4Rz80PH/kUNDbVag34NLJfqQ1Mq5z1HnVG9dR5i0E+GS2igg1eBKnK7FnrSBciVyr6CqrFkmobznwaJcOVhWwSFsGVYsSJzSEmf+aof3x5BNS31mT4H6KZ8mlUVSYVEur8ORnonRfFqpH/iulXLkbX3gAKuEPz5c+jO1nQZ2rlrRtod+kFyJlClyiEyAB9kJ9AcYByN6ooBvtG9We4g3ctzM3PzHCYE8zBaqgpV+f1ZcYucN8aLduDB3OqC6SNpRtsnBbMSOZZhyQMvbALZO6mf8yWHfSCFb2AwDPXrfXIrEUzOdoYVMkK1xa6gkAAsm2bTiJsrA7OX3Morh/NrB1n1YQd1I+JYaxbOIfPeTgVI3vFs61+GInnb2Meq3eMaBPM+bp3/XmrB3LoS4OvYhp0DytDFu6WBkxTI7pOfiIoPo63q9qTZYRgIeQJfby/FgQuEAe6cfbBvqS/pj2ONi580wJj2GmSr/mKHV80PqcUZgLkPfIFjgNQ8zpKaimzPiJvzmljO5X/1z0fp+ZTdp2RHtGPSlRK0bsn9320/29jm6u10Im0M/bf9G/Fekk7zObqt4xVSw2DZMYgpa9EiUqErUzLfj7N/nt1ck8of9y21iZj5UyGg3o4KQXU2aLRxnCk9vGpdOCa4cUfhNefgSgbsQnmH0ibXc1r4=
   on:
     branch: master
-    python: '3.7'
+    python: '3.6'
