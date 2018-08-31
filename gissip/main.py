@@ -4,11 +4,11 @@
 import logging
 import sys
 import argparse
-import requests
-from datetime import datetime, timedelta
 import yaml
+from gissip.github_api import GitAPI
 
-log = logging.getLogger('critical_peering')
+
+log = logging.getLogger('gissip')
 out_hdlr = logging.StreamHandler(sys.stdout)
 out_hdlr.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
 out_hdlr.setLevel(logging.INFO)
@@ -24,28 +24,6 @@ def bordered(text):
         res.append('│' + (s + ' ' * width)[:width] + '│')
     res.append('└' + '─' * width + '┘')
     return '\n'.join(res)
-
-
-def get_commits_within_window(api, headers, owner, repo, days):
-    req_response = requests.get(api + "/repos/{}/{}/commits".format(owner, repo), headers=headers)
-
-    if req_response.status_code == 404:
-        raise ValueError("Owner or Repo not found")
-    elif req_response.status_code == 403:
-        raise ValueError("Rate Limit error: {}. Current value "
-                         "of access per hour: {}".format(req_response.json()['message'],
-                                                         req_response.headers['X-RateLimit-Limit']))
-    elif req_response.status_code == 401:
-        raise ValueError("Failed Authorization")
-
-    result_commits = []
-    all_commits = req_response.json()
-    for commit in all_commits:
-        commit_date = datetime.strptime(commit['commit']['author']['date'], '%Y-%m-%dT%H:%M:%SZ')
-        if commit_date > datetime.now() - timedelta(days=days):
-            result_commits.append(commit)
-
-    return result_commits
 
 
 def print_results(results):
@@ -79,15 +57,8 @@ def main():
 
     results = {}
 
-    if args.token:
-        headers = {'Authorization': 'token ' + args.token}
-        req_response = requests.get(args.api, headers=headers)
-        if req_response.status_code == 401:
-            log.info("Authorization error: {}".format(req_response.json()['message']))
-        else:
-            log.info("INFO: Successfully authenticated")
-    else:
-        headers = None
+    git_api = GitAPI(url=args.api,
+                     token=args.token)
 
     if args.yaml:
         with open(args.yaml, 'r') as yaml_file:
@@ -99,23 +70,20 @@ def main():
                 for repo in repos:
                     try:
                         if repo in list(results[owner].keys()):
-                            results[owner][repo].add(get_commits_within_window(args.api, headers, owner,
-                                                                               repo, args.days))
+                            results[owner][repo].add(git_api.get_commits_within_window(owner, repo, args.days))
                         else:
-                            results[owner][repo] = get_commits_within_window(args.api, headers, owner, repo, args.days)
+                            results[owner][repo] = git_api.get_commits_within_window(owner, repo, args.days)
                     except ValueError as e:
                         log.error("{}, Owner: {}, Repo: {}".format(e, owner, repo))
     elif args.repo and args.owner:
         results[args.owner] = {}
         try:
-            results[args.owner][args.repo] = get_commits_within_window(args.api, headers, args.owner,
-                                                                       args.repo, args.days)
+            results[args.owner][args.repo] = git_api.get_commits_within_window(args.owner, args.repo, args.days)
         except ValueError as e:
             log.error("{}, Owner: {}, Repo: {}".format(e, args.owner, args.repo))
     else:
-        print("pass me something")
+        print("Gissip need either a repo or a YML file to look at")
 
-    # pprint.pprint(results)
     print_results(results)
 
 
