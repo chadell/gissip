@@ -3,6 +3,7 @@ import sys
 import os
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
+import gissip as package
 
 
 def parse_requirements(requirements_file):
@@ -35,14 +36,14 @@ class PyTest(TestCommand):
 
 
 setup(
-    name="gissip",
-    version="0.0.5",
+    name=package.__name__,
+    version=package.__version__,
     python_requires='>=3.5',
-    author="Christian Adell",
-    author_email="chadell@gmail.com",
-    mantainer="Christian Adell",
-    mantainer_email="chadell@gmail.com",
-    description="Script to observer commits of your loved repos",
+    author=package.__author__,
+    author_email=package.__author_email__,
+    mantainer=package.__author__,
+    mantainer_email=package.__author_email__,
+    description=package.__description__,
     packages=find_packages(),
     entry_points={'console_scripts': [
         'gissip = gissip.main:main'

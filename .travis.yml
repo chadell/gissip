@@ -1,18 +1,18 @@
 language: python
 python:
-- '2.7'
 - '3.5'
 - '3.6'
-install:
-- pip install -r requirements/test_requirements.txt
-- pip install -r requirements/requirements.txt
-script: scripts/test
+install: true
+env:
+  global:
+  - REPOSITORY_USER=chadell
+  - secure: PFMQ6cMIgcuxyM7uYY8kwWyNMwdkmNIZtfrGRiypBrqMb6UWqZdVkCzmKlnH3e7RPXdDoUBUA1G4kPGDGiJkpMvsZtJH3nSchu9rBg4ZMxif/uESZKx471UtcYk6wek3CL6Mzu2lKMGbYQpY4V1FHCttiXxMP/v1Ua8/b5+2raLj4Sj6q8LAwCxOgI/nqxVCJGAVk8juxhLcx+99l5CSXLxHNW1SBkdJNlscRSIVmZvaQByTaNA6duVftDiF0A3F4kvXtJX/GHXFdCMYkdLkHgEjl75UkFcPIUk+ojOo7TbX5uowAfEE0NR5QffuITcUBCdtB8FEW2i5IXbEzjCyQ0IKTP0bDHF7oi+yeyASpALGLXPwVWgMrxnD08cbPH9iC4bbYvw071rKOJHTRr9qQkxDaUqCrByxg/u8YQ0jTWPPDa8pmMIfX5ZXYsaPV9Snttkq+vU+uhzmxmxfP4xzshyefno1PXe3EXFJmAYfTa8VFTgY4HKxy2TSbilwq1stSX/XgnlG6O9gumOvrgkZbM/r5UX5mpj6CJnRESk7jxO2tVMX8dQW0DHKiCH1jM/5J5ltMi8OPX82MKWtAcr7Thu24NqtfyeEy/6W5FrCtLLkRJbALFayH3wmHTzprz4AaUgN0eLPzi5Ay00pV2F/jWAArPg+o+nsg0TEu+FHQPk=
+script:
+- "./script/cibuild"
 deploy:
-  provider: pypi
-  distributions: sdist
-  user: chadell
-  password:
-    secure: eEhRwiuW4Rz80PH/kUNDbVag34NLJfqQ1Mq5z1HnVG9dR5i0E+GS2igg1eBKnK7FnrSBciVyr6CqrFkmobznwaJcOVhWwSFsGVYsSJzSEmf+aof3x5BNS31mT4H6KZ8mlUVSYVEur8ORnonRfFqpH/iulXLkbX3gAKuEPz5c+jO1nQZ2rlrRtod+kFyJlClyiEyAB9kJ9AcYByN6ooBvtG9We4g3ctzM3PzHCYE8zBaqgpV+f1ZcYucN8aLduDB3OqC6SNpRtsnBbMSOZZhyQMvbALZO6mf8yWHfSCFb2AwDPXrfXIrEUzOdoYVMkK1xa6gkAAsm2bTiJsrA7OX3Morh/NrB1n1YQd1I+JYaxbOIfPeTgVI3vFs61+GInnb2Meq3eMaBPM+bp3/XmrB3LoS4OvYhp0DytDFu6WBkxTI7pOfiIoPo63q9qTZYRgIeQJfby/FgQuEAe6cfbBvqS/pj2ONi580wJj2GmSr/mKHV80PqcUZgLkPfIFjgNQ8zpKaimzPiJvzmljO5X/1z0fp+ZTdp2RHtGPSlRK0bsn9320/29jm6u10Im0M/bf9G/Fekk7zObqt4xVSw2DZMYgpa9EiUqErUzLfj7N/nt1ck8of9y21iZj5UyGg3o4KQXU2aLRxnCk9vGpdOCa4cUfhNefgSgbsQnmH0ibXc1r4=
+- provider: script
+  skip_cleanup: true
+  script: "./script/cideploy"
   on:
-    branch: master
-    python: '3.6'
+    python: 3.6
+    tags: true

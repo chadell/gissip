@@ -100,8 +100,13 @@ ENV/
 # mypy
 .mypy_cache/
 
-.vscode/
 .pytest_cache/
 
+# IDEs
+.vscode/
 
+# Bootstrap flag
+.bootstrapped
+
+# My loved repos
 my_loved_*.yml
