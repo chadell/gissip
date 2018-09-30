@@ -11,7 +11,7 @@ To create a GitHub token do:
 * Your profile -> Settings -> Developer Settings -> Personal Access Tokens (Repo scope is enough)
 
 ```bash
-$ python -m gissip.main  -h
+$ gissip  -h
 usage: main.py [-h] [-v] [-a API] [-o OWNER] [-r REPO] [-d DAYS] [-y YAML]
                [-t TOKEN]
 
@@ -33,9 +33,9 @@ optional arguments:
 ## Examples
 
 ```bash
-$ python -m gissip.main  -d 7 -y my_loved_repos.yml
-$ python -m gissip.main  -d 7 -y my_loved_repos.yml -t xxx -a "my own GitHub API"
-$ python -m gissip.main -o chadell -r gissip
+$ gissip  -d 7 -y my_loved_repos.yml
+$ gissip  -d 7 -y my_loved_repos.yml -t xxx -a "my own GitHub API"
+$ gissip -o chadell -r gissip
 ```
 
 ### YAML file
@@ -50,8 +50,3 @@ You can also define a YAML file containing several repos from several owners, fo
 - dachad:
   - tcpgoon
 ```
-
-## TODO
-
-* Testing, CI, CD
-* Upload PIP packages

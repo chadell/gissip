@@ -31,7 +31,9 @@ def print_results(results):
         for repo in results[owner]:
             print((bordered("Commits submitted for {}/{}\n".format(owner, repo))))
             for commit in results[owner][repo]:
-                print(commit['html_url'])
+                print("* " + commit['commit']['message'])
+                print("  - by: " + commit['commit']['author']['email'])
+                print("  - code: " + commit['html_url'])
 
 
 def parse_arguments():
